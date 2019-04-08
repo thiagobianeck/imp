@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon",
+    "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "cep-promise": "^3.0.6",
     "fast-date-format": "^2.1.0",
+    "fs": "0.0.1-security",
     "xlsx": "^0.14.2"
   }
 }

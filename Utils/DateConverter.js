@@ -3,7 +3,12 @@ const DateFormater = require('fast-date-format');
 class DateConverter {
     static textoParaData(texto) {
         let data = texto.split('/');
-        let [dia, mes, ano] = [parseInt(data[0]), parseInt(data[1])-1, this.converteAnoDoisDigitos(data[2])];
+        let ano = 0;
+
+        if(data[2].length === 4) ano = parseInt(data[2]);
+        if(data[2].length === 2) ano = this.converteAnoDoisDigitos(data[2]);
+
+        let [dia, mes] = [parseInt(data[0]), parseInt(data[1])-1];
         return new Date(ano, mes, dia);
     }
 
@@ -53,6 +58,32 @@ class DateConverter {
             return `${zeros}${diaOuMes}`;
         }
         return `${diaOuMes}`;
+    }
+
+    static converteDataRelatorio(dataRelatorio){
+        let dataSplit = dataRelatorio.split(' ');
+        let horaSplit = dataSplit[4].split(':');
+        let timeObj = {
+            dia: parseInt(dataSplit[0]),
+            mes: this.converteParaNumeroMesStringCurto(dataSplit[1]),
+            ano: parseInt(dataSplit[2]),
+            hora: parseInt(horaSplit[0])-3,
+            minutos: parseInt(horaSplit[1])
+        };
+        return new Date(timeObj.ano,timeObj.mes,timeObj.dia,timeObj.hora,timeObj.minutos);
+    }
+
+    static converteParaNumeroMesStringCurto(mesString) {
+        let mes = mesString.toLowerCase();
+        let mesCurtoArray = ['jan', 'fev', 'mar', 'abr','mai','jun','jul','ago','set','out','nov','dez'];
+        let indice = 0;
+        for (let i = 0; i < mesCurtoArray.length; i++) {
+            if(mesCurtoArray[i] === mes){
+                indice = i;
+                break;
+            }
+        }
+        return indice;
     }
 }
 
